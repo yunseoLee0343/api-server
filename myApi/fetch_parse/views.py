@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import Product
 import requests
 
+
 def get_starbucks_data(request):
     urls = [
         'https://www.starbucks.co.kr/upload/json/menu/W0000171.js',
