@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import get_starbucks_data
+from .views import fetch_and_save_starbucks_data, get_all_starbucks_data, get_starbucks_data
 
 urlpatterns = [
-    path('get-starbucks-data/', get_starbucks_data, name='get_starbucks_data'),
-    # 다른 URL들을 여기에 추가할 수 있음
+    path('get-starbucks-data/', fetch_and_save_starbucks_data,),
+    path('/starbucks/all', get_all_starbucks_data,),
+    path('starbucks/<str:field_name>/<str:field_value>/', get_starbucks_data),
 ]
