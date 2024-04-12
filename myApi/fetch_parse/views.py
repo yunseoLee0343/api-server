@@ -11,6 +11,11 @@ import threading
 # 우선순위 큐 생성
 priority_queue = queue.PriorityQueue()
 
+# Django 작업 우선순위 정의
+DJANGO_PRIORITY = 0
+CRAWLING_PRIORITY = 1
+
+
 def parse_float(value):
     if '.' in value:
         temp = value.split('.')[0];
@@ -90,8 +95,6 @@ def get_starbucks_data(request, field_name, field_value):
     return JsonResponse(data, safe=False)
 
 
-
-# 작업 스레드 함수
 def worker():
     while True:
         # 우선순위 큐에서 작업 가져오기
@@ -105,24 +108,28 @@ def worker():
         except ObjectDoesNotExist:
             pass  # 해당 상품이 존재하지 않으면 계속 진행
 
-        # 크롤링 작업 수행
-        with transaction.atomic():
-            Product.objects.create(
-                new_product=data[0],
-                product_name=data[1],
-                cate_name=data[2],
-                content=data[3],
-                calories=data[4],
-                sugars=data[5],
-                protein=data[6],
-                caffeine=data[7],
-                fat=data[8],
-                sodium=data[9],
-                imageUrl=data[10]
-            )
-
-        # 작업 완료 메시지 출력
-        print("Task completed successfully.")
+        # 우선순위에 따라 작업 처리
+        if priority == CRAWLING_PRIORITY:
+            # 크롤링 작업 처리
+            fetch_and_save_starbucks_data(data)
+        elif priority == DJANGO_PRIORITY:
+            # Django 작업 처리
+            with transaction.atomic():
+                Product.objects.create(
+                    new_product=data[0],
+                    product_name=data[1],
+                    cate_name=data[2],
+                    content=data[3],
+                    calories=data[4],
+                    sugars=data[5],
+                    protein=data[6],
+                    caffeine=data[7],
+                    fat=data[8],
+                    sodium=data[9],
+                    imageUrl=data[10]
+                )
+            # 작업 완료 메시지 출력
+            print("Django task completed successfully.")
 
 # 응답 함수
 # 응답 함수
