@@ -4,7 +4,6 @@
 **Role2. Stores data in mysql.**\
 **Role3. Provides the data through API.**
 
----
 
 ## Getting Started
 1. Clone the repository
@@ -17,8 +16,6 @@
     - ``` python manage.py runserver 8000 ```
 
 
----
-
 ## API Endpoints
 - /admin
 - /fetch
@@ -30,8 +27,6 @@
       - You can get multiple products.
 
 
----
-
 ## Notable Features
 1. **Priority Queue as a whole**
    - The server uses a priority queue to manage all the requests.
@@ -41,7 +36,6 @@
     - If the server fails to fetch the data from the official website, the server will retry the request.
     - The server will retry the request with a higher priority.
 
----
 
 ## Project Structure
 - [WARNING] This project is not yet deployed on AWS EC2 instance.
