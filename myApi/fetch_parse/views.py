@@ -1,4 +1,5 @@
 # views.py
+from django.core.serializers import serialize
 from django.db import transaction
 from django.http import JsonResponse
 from .models import Product
@@ -78,14 +79,16 @@ def get_all_starbucks_data(request):
 
     return JsonResponse(data, safe=False)
 
+
 def get_starbucks_data(request, field_name, field_value):
-    try:
-        menu = Product.objects.get(**{field_name: field_value})
-    except Product.DoesNotExist:
+    menus = Product.objects.filter(**{field_name: field_value})
+
+    if not menus.exists():
         return JsonResponse({'error': 'Menu not found'}, status=404)
 
-    data = {field.name: getattr(menu, field.name) for field in menu._meta.fields}
+    data = serialize('json', menus)
     return JsonResponse(data, safe=False)
+
 
 
 # 작업 스레드 함수
