@@ -11,8 +11,8 @@ class StarbucksDataTestCase(TestCase):
         mock_response = {
             'list': [
                 {
-                    'newicon': 'Y',
-                    'product_NM': 'Test Product',
+                    'new_product': 'Y',
+                    'product_name': 'Test Product',
                     'cate_name': 'Test Category',
                     'content': 'Test Content',
                     'kcal': 100,
@@ -20,7 +20,8 @@ class StarbucksDataTestCase(TestCase):
                     'protein': 5,
                     'caffeine': 50,
                     'sat_fat': 10,
-                    'sodium': 15
+                    'sodium': 15,
+                    'imageUrl' : 'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000002487]_20210426091745609.jpg'
                 }
             ]
         }
@@ -28,7 +29,7 @@ class StarbucksDataTestCase(TestCase):
         mock_get.return_value = Mock(ok=True)
         mock_get.return_value.json.return_value = mock_response
 
-        url = reverse('get_starbucks_data')
+        url = reverse('get_starbucks_data', args=['product_name', 'Test Product'])
         mock_get.side_effect = RequestException()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 500)
