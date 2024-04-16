@@ -27,9 +27,6 @@ SECRET_KEY = 'django-insecure-x*4)q$q5oq+e+!=0u$kxn&(7!$_4(i-@r709f2e67akim^rn*g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
-
 # Application definition
 
 CRON_CLASSES = [
