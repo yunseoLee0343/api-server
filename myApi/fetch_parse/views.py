@@ -111,7 +111,7 @@ def worker():
         # 우선순위에 따라 작업 처리
         if priority == CRAWLING_PRIORITY:
             # 크롤링 작업 처리
-            fetch_and_save_starbucks_data(data)
+            fetch_and_save_starbucks_data()
         elif priority == DJANGO_PRIORITY:
             # Django 작업 처리
             with transaction.atomic():
